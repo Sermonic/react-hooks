@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Authenticaton = () => {
+const Authentication = () => {
+  const [counter, setCount] = useState(0);
+  const handleCounter = () => {
+    setCount(counter + 1)
+  };
+  console.log('Counter:', counter);
+
   return (
     <div className="auth-page">
+      <button onClick={handleCounter}>Counter</button>
       <div className="container page">
         <div className="row">
           <div className="col-md-6 offset-md-3 col-xs-12">
@@ -42,4 +49,4 @@ const Authenticaton = () => {
   );
 };
 
-export default Authenticaton;
+export default Authentication;
