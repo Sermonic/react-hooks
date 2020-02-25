@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 import useFetch from "../../hooks/useFetch";
 
@@ -12,6 +12,7 @@ const Authentication = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [isSuccessfulSubmit, setIsSuccessfulSubmit] = useState(false);
   const [{response, isLoading, error}, doFetch] = useFetch(apiUrl);
 
   console.log('useFetch', isLogin);
@@ -26,6 +27,18 @@ const Authentication = props => {
       }
     })
   };
+
+  useEffect(() => {
+    if (!response) {
+      return
+    }
+    localStorage.setItem('token', response.user.token)
+    setIsSuccessfulSubmit(true)
+  }, [response]);
+
+  if (isSuccessfulSubmit) {
+    return <Redirect to='/' />
+  }
 
   return (
     <div className="auth-page">
