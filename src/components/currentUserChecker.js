@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import useFetch from '../hooks/useFetch';
 import {CurrentUserContext} from '../contexts/currentUser';
@@ -23,7 +23,7 @@ const CurrentUserChecker = ({children}) => {
       ...state,
       isLoading: true
     }))
-  },[]);
+  },[token, setCurrentUserState, doFetch]);
 
   useEffect(() => {
     if (!response) {
