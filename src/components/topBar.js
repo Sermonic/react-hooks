@@ -51,7 +51,8 @@ const TopBar = () => {
                 >
                   <img
                     className='user-pic'
-                    src={currentUserState.currentUser.image}
+                    // src={currentUserState.currentUser.image}
+                    src={"https://static.productionready.io/images/smiley-cyrus.jpg"}
                     alt=""
                   />
                   &nbsp; {currentUserState.currentUser.username}
