@@ -10,15 +10,14 @@ import Loading from '../../components/loading';
 import ErrorMessage from '../../components/errorMessage';
 import FeedToggle from '../../components/feedToggler';
 
-const TagFeed = ({location, match}) => {
+const YourFeed = ({location, match}) => {
   const tagName = match.params.slug;
   const {offset, currentPage} = getPaginator(location.search);
   const stringifiedParams = stringify({
     limit,
-    offset,
-    tag: tagName
+    offset
   });
-  const apiUrl = `/articles?${stringifiedParams}`;
+  const apiUrl = `/articles/feed?${stringifiedParams}`;
   const [{response, isLoading, error}, doFetch] = useFetch(apiUrl);
   const url = match.url;
 
@@ -60,4 +59,4 @@ const TagFeed = ({location, match}) => {
   );
 };
 
-export default TagFeed;
+export default YourFeed;
