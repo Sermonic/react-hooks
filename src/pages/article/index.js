@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import useFetch from '../../hooks/useFetch';
 import Loading from '../../components/loading';
 import ErrorMessage from '../../components/errorMessage';
 import TagList from '../../components/tagList';
+import useFetch from '../../hooks/useFetch';
 
 const Article = props => {
   const slug = props.match.params.slug;
