@@ -1,47 +1,47 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
 
 import useFetch from "../../hooks/useFetch";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import {CurrentUserContext} from '../../contexts/currentUser';
-import BackendErrorMessages from '../../components/backendErrorMessages';
+import { CurrentUserContext } from "../../contexts/currentUser";
+import BackendErrorMessages from "../../components/backendErrorMessages";
 
-const Authentication = props => {
-  const isLogin = props.match.path === '/login';
-  const pageTitle = isLogin ? 'Sign In' : 'Sign Up';
-  const descriptionLink = isLogin ? '/register' : '/login';
-  const descriptionText = isLogin ? 'Need an account?' : 'Have an account?';
-  const apiUrl = isLogin ? '/users/login' : '/users';
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+const Authentication = (props) => {
+  const isLogin = props.match.path === "/login";
+  const pageTitle = isLogin ? "Sign In" : "Sign Up";
+  const descriptionLink = isLogin ? "/register" : "/login";
+  const descriptionText = isLogin ? "Need an account?" : "Have an account?";
+  const apiUrl = isLogin ? "/users/login" : "/users";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [isSuccessfulSubmit, setIsSuccessfulSubmit] = useState(false);
-  const [{response, isLoading, error}, doFetch] = useFetch(apiUrl);
-  const [, setToken] = useLocalStorage('token');
+  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
+  const [, setToken] = useLocalStorage("token");
   const [, dispatch] = useContext(CurrentUserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const user = isLogin ? {email, password} : {email, password, username};
+    const user = isLogin ? { email, password } : { email, password, username };
     doFetch({
-      method: 'post',
+      method: "post",
       data: {
-        user
-      }
-    })
+        user,
+      },
+    });
   };
 
   useEffect(() => {
     if (!response) {
-      return
+      return;
     }
     setToken(response.user.token);
     setIsSuccessfulSubmit(true);
-    dispatch({type: 'SET_AUTHORIZED', payload: response.user});
+    dispatch({ type: "SET_AUTHORIZED", payload: response.user });
   }, [response, setToken, dispatch]);
 
   if (isSuccessfulSubmit) {
-    return <Redirect to='/' />
+    return <Redirect to="/" />;
   }
 
   return (
@@ -56,6 +56,15 @@ const Authentication = props => {
             <form onSubmit={handleSubmit}>
               {error && <BackendErrorMessages backendErrors={error.errors} />}
               <fieldset>
+                <div>
+                  <h5>
+                    <strong>Account for testing: </strong>
+                  </h5>
+                  <p>
+                    <strong>Email:</strong> 2dwqdedwe@mail.com <br />
+                    <strong>Password:</strong> 2dwqdedwe@dcscwewed.ewdwewe
+                  </p>
+                </div>
                 {!isLogin && (
                   <fieldset className="form-group">
                     <input
@@ -63,7 +72,7 @@ const Authentication = props => {
                       className="form-control form-control-lg"
                       placeholder="Username"
                       value={username}
-                      onChange={e => setUsername(e.target.value)}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </fieldset>
                 )}
@@ -73,7 +82,7 @@ const Authentication = props => {
                     className="form-control form-control-lg"
                     placeholder="Email"
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </fieldset>
                 <fieldset className="form-group">
@@ -82,7 +91,7 @@ const Authentication = props => {
                     className="form-control form-control-lg"
                     placeholder="Password"
                     value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </fieldset>
                 <button
